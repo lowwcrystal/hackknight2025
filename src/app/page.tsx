@@ -179,17 +179,14 @@ export default function Home() {
           </button>
         </form>
       </main>
-
-      {/* Profile Section */}
+      
+      {/*
+      {/* Profile Section *//*}
       <section id="profile" className="bg-white py-8 text-center border-t border-orange-200">
         <h3 className="text-2xl font-bold text-orange-500 mb-2">Your Profile</h3>
         <p className="text-gray-600">Coming soon — track your cooking uploads and progress!</p>
       </section>
-
-      {/* Footer */}
-      <footer className="text-center py-4 text-gray-500 border-t border-orange-200 bg-white">
-                © {new Date().getFullYear()} Flame On — Perfect your cook every time 🔥
-            </footer>
+      */}
         </div>
     );
 }

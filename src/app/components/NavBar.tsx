@@ -8,8 +8,8 @@ export default function NavBar() {
                 Flame On
             </h1>
             <ul className="flex gap-8 text-orange-700">
-                <li><a href="#" className="hover:text-orange-500 transition-colors">Home</a></li>
-                <li><a href="#upload" className="hover:text-orange-500 transition-colors">Generate</a></li>
+                <li><Link href="/" className="hover:text-orange-500 transition-colors">Home</Link></li>
+                <li><Link href="/auth/generate" className="hover:text-orange-500 transition-colors">Generate</Link></li>
                 {/*<li><Link href="/auth/login" className="hover:text-orange-500 transition-colors">Login</Link></li>
                 <li><Link href="/auth/sign-up" className="hover:text-orange-500 transition-colors">Sign Up</Link></li>*/}
                 <li>
