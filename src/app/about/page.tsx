@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import {motion} from "framer-motion";
 
 export default async function AboutPage() {
   return (
@@ -16,7 +16,8 @@ export default async function AboutPage() {
           Ready to Ignite Your Health?
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          We exist to help you move past the "takeout trap" and into the powerful solution of cooking for yourself.
+            We exist to help you move past the &#34;takeout trap&#34; and into the powerful solution of cooking for
+            yourself.
           Flame On is your command center for healthy, homemade nutrition.
         </p>
       </header>
@@ -36,8 +37,9 @@ export default async function AboutPage() {
             The Takeout Trap is Real
           </h2>
           <p className="text-lg text-gray-700 mb-6 text-center">
-            You know the drill: Exhaustion hits, the motivation to cook vanishes, and suddenly, you've spent
-            $50 on food that leaves you feeling sluggish and guilty. It's not a lack of desire—it's a lack of a clear,
+              You know the drill: Exhaustion hits, the motivation to cook vanishes, and suddenly, you&#39;ve spent
+              $50 on food that leaves you feeling sluggish and guilty. It&#39;s not a lack of desire—it&#39;s a lack of
+              a clear,
             supported plan for your busy life.
           </p>
           <div className="flex justify-center space-x-8 text-2xl text-orange-500 font-semibold">

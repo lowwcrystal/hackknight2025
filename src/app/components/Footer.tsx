@@ -1,4 +1,5 @@
-import { Instagram, Youtube, Facebook } from "lucide-react";
+import {Facebook, Instagram, Youtube} from "lucide-react";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -51,18 +52,18 @@ export default function Footer() {
 
       {/* Navbar Links */}
       <nav className="flex flex-wrap justify-center gap-10 mt-4 text-lg font-medium">
-        <a href="/" className="hover:underline">
+          <Link href="/" className="hover:underline">
           Home
-        </a>
-        <a href="/generate" className="hover:underline">
+          </Link>
+          <Link href="/generate" className="hover:underline">
           Recipes
-        </a>
+          </Link>
         {/*<a href="/generate" className="hover:underline">
           Cooking Tips
         </a>*/}
-        <a href="/about" className="hover:underline">
+          <Link href="/about" className="hover:underline">
           About
-        </a>
+          </Link>
       </nav>
 
       {/* Main Footer Text */}

@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { createClient } from "@/utils/supabase/client";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
+import {createClient} from "@/utils/supabase/client";
+import {Session} from "@supabase/auth-js";
 
 export default function UserMenu() {
   const router = useRouter();
-  const [session, setSession] = useState<any>(null);
+    const [session, setSession] = useState<Session | null>(null);
   const [mounted, setMounted] = useState(false); // prevent SSR mismatch
 
   const supabase = createClient();
