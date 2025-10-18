@@ -10,8 +10,8 @@ export default function NavBar() {
             <ul className="flex gap-8 text-orange-700">
                 <li><Link href="/" className="hover:text-orange-500 transition-colors">Home</Link></li>
                 <li><Link href="/auth/generate" className="hover:text-orange-500 transition-colors">Generate</Link></li>
-                {/*<li><Link href="/auth/login" className="hover:text-orange-500 transition-colors">Login</Link></li>
-                <li><Link href="/auth/sign-up" className="hover:text-orange-500 transition-colors">Sign Up</Link></li>*/}
+                <li><Link href="/recipe" className="hover:text-orange-500 transition-colors">Recipes</Link></li>
+                <li><Link href="/attempts" className="hover:text-orange-500 transition-colors">Attempts</Link></li>
                 <li>
                     <Link href="/auth/login"className="px-4 py-2 rounded-full border-2 border-orange-400 text-orange-400 font-medium transition-all duration-300 hover:bg-orange-400 hover:text-white hover:shadow-lg hover:scale-105">
                         Login
