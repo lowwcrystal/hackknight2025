@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
-import urlToBase64 from '../../functions/urlToBase64'
+import urlToBase64 from '../../../functions/urlToBase64'
 
 export const runtime = "nodejs";
 

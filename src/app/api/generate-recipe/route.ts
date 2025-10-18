@@ -14,10 +14,6 @@ interface RecipeResponse {
   calories: number;
   image_url: string;
   ingredients: string[];
-  cuisine: string;
-  prep_time: number;
-  cook_time: number;
-  servings: number;
 }
 
 export async function POST(req: NextRequest) {
@@ -38,12 +34,13 @@ export async function POST(req: NextRequest) {
 You are a professional chef and recipe developer. Generate a complete recipe based on the provided ingredients and cuisine type.
 
 Requirements:
-- Create a recipe that uses the provided ingredients as the main components
+- Create a recipe that uses the provided ingredients as the core components, while pantry ingredients can be used as well.
 - Match the specified cuisine style and cooking techniques
 - Provide accurate calorie estimation per serving
 - Generate a realistic image URL using Unsplash or similar stock photo services (use format like: https://images.unsplash.com/photo-[timestamp]-[id]?ixlib=rb-4.0.3&ixid=[id]&auto=format&fit=crop&w=800&q=80)
 - Include appropriate prep time and cook time
 - Make the recipe practical and achievable for home cooks
+- The recipe should be a single serving and healthy. 
 
 Ingredients provided: ${ingredients.join(", ")}
 Cuisine: ${cuisine}
@@ -59,10 +56,6 @@ Output ONLY JSON per the schema.
         calories: { type: "number" },
         image_url: { type: "string" },
         ingredients: { type: "array", items: { type: "string" } },
-        cuisine: { type: "string" },
-        prep_time: { type: "number" },
-        cook_time: { type: "number" },
-        servings: { type: "number" }
       },
       required: ["name", "description", "calories", "image_url", "ingredients", "cuisine", "prep_time", "cook_time", "servings"]
     } as const;
