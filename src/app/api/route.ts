@@ -87,8 +87,8 @@ Output ONLY JSON per schema.
 
     return NextResponse.json({ result: json });
 
-  } catch (e: any) {
+  } catch (e: unknown) {
     console.error(e);
-    return NextResponse.json({ error: e.message || "Server error" }, { status: 500 });
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
