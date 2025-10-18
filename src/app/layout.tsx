@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Theme } from "@radix-ui/themes"; // Import Radix Theme
-import "@radix-ui/themes/styles.css"; // Import Radix styles globally
-import "./globals.css"; // Your existing global styles
+import "./globals.css";
+import ThemeWrapper from "./components/ThemeWrapper";
+import ClientOnly from "./components/ClientOnly";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,21 +19,13 @@ export const metadata: Metadata = {
   description: "Check how cooked your meat is 🔥",
 };
 
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {/* Wrap the app with Radix UI Theme */}
-        <Theme>
-          {children}
-        </Theme>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <ClientOnly>
+          <ThemeWrapper>{children}</ThemeWrapper>
+        </ClientOnly>
       </body>
     </html>
   );
