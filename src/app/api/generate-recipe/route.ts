@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenAI } from "@google/genai";
+import {NextRequest, NextResponse} from "next/server";
+import {GoogleGenAI} from "@google/genai";
 
 export const runtime = "nodejs";
 
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Ingredients array is required" }, { status: 400 });
     }
 
-    if (!cuisine || typeof cuisine !== "string") {
+      if (!cuisine) {
       return NextResponse.json({ error: "Cuisine is required" }, { status: 400 });
     }
 
