@@ -1,6 +1,7 @@
 import {createClient} from "@/utils/supabase/server";
 import {UserRecipe} from "@/types/userRecipe";
 import Link from "next/link";
+import Image from "next/image";
 
 export default async function DashboardPage() {
     const supabase = await createClient();
@@ -45,7 +46,7 @@ export default async function DashboardPage() {
                             className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition block"
                         >
                             {recipe.imageUrl ? (
-                                <img
+                                <Image
                                     src={recipe.imageUrl}
                                     alt={recipe.title}
                                     className="w-full h-40 object-cover"

@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import {useState} from "react";
 import Image from "next/image";
 import "./globals.css";
-import NavBar from "./components/NavBar";
 
 export default function Home() {
   const [meat, setMeat] = useState("");
