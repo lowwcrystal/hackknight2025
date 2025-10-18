@@ -2,49 +2,27 @@ import type {Recipe} from "@/types/recipe";
 import RoundedLike from "@/app/components/Rounded";
 
 interface RecipeProps {
+    id: string;
     recipe: Recipe;
+    tags: string[];
 }
 
-export default function RecipeCard({recipe}: RecipeProps) {
-    const content = recipe.content;
-    const ingredients = content
-        .substring(0, content.indexOf("Instructions:"))
-        .split("\n")
-        .filter((line) => line.trim() !== "" && !line.startsWith("Ingredients:"));
-
-    const instructions = content
-        .substring(content.indexOf("Instructions:") + "Instructions:".length)
-        .split("\n")
-        .filter((line) => line.trim() !== "" && !line.startsWith("Instructions:"))
-        .map(line => line.replace(/^\d+\.\s*/, ""));
-
-    const tags = Object.values(recipe.tags) as string[];
-
-    // Placeholder calorie data
+export default function RecipeCard({id, recipe, tags}: RecipeProps) {
     const calories = [
-        {label: "Total", value: "520 kcal"},
-        {label: "Protein", value: "32g"},
-        {label: "Carbs", value: "45g"},
-        {label: "Fat", value: "18g"},
+        {label: "Total", value: recipe.calories.total},
+        {label: "Protein", value: recipe.calories.protein},
+        {label: "Carbs", value: recipe.calories.carbs},
+        {label: "Fat", value: recipe.calories.fat},
     ];
-
-    // Placeholder user photos
-    const userPhotos = [
-        "/placeholders/photo1.jpg",
-        "/placeholders/photo2.jpg",
-        "/placeholders/photo3.jpg",
-        "/placeholders/photo4.jpg",
-    ];
-
     return (
         <div
-            key={recipe.id}
+            key={id}
             rel="noopener noreferrer"
             className="overflow-hidden block"
         >
             <div className="p-4">
                 <h4 className="text-5xl font-bold mb-5 bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent">
-                    {recipe.title}
+                    {recipe.name}
                 </h4>
 
                 {/* Tags */}
@@ -67,7 +45,7 @@ export default function RecipeCard({recipe}: RecipeProps) {
                             Ingredients
                         </h5>
                         <ul className="text-sm text-gray-700 list-disc pl-4 space-y-1">
-                            {ingredients.map((ing: string, idx: number) => (
+                            {recipe.ingredients.map((ing: string, idx: number) => (
                                 <li key={idx}>{ing}</li>
                             ))}
                         </ul>
@@ -77,7 +55,7 @@ export default function RecipeCard({recipe}: RecipeProps) {
                     <RoundedLike>
                         <h5 className="font-semibold text-orange-600 mb-2 text-lg">Steps</h5>
                         <ol className="text-sm text-gray-700 list-decimal pl-4 space-y-1">
-                            {instructions.map((step: string, idx: number) => (
+                            {recipe.steps.map((step: string, idx: number) => (
                                 <li key={idx}>{step}</li>
                             ))}
                         </ol>
@@ -109,19 +87,19 @@ export default function RecipeCard({recipe}: RecipeProps) {
                 </div>
 
 
-                {/* User Photos Section */}
-                <section className="mt-8">
-                    <h5 className="text-3xl font-semibold text-orange-600 mt-10 mb-4">Your Attempts</h5>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {userPhotos.map((photo, idx) => (
-                            <RoundedLike
-                                key={idx}
-                            >
-                                <div></div>
-                            </RoundedLike>
-                        ))}
-                    </div>
-                </section>
+                {/*/!* User Photos Section *!/*/}
+                {/*<section className="mt-8">*/}
+                {/*    <h5 className="text-3xl font-semibold text-orange-600 mt-10 mb-4">Your Attempts</h5>*/}
+                {/*    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">*/}
+                {/*        {userPhotos.map((photo, idx) => (*/}
+                {/*            <RoundedLike*/}
+                {/*                key={idx}*/}
+                {/*            >*/}
+                {/*                <div></div>*/}
+                {/*            </RoundedLike>*/}
+                {/*        ))}*/}
+                {/*    </div>*/}
+                {/*</section>*/}
             </div>
         </div>
     );

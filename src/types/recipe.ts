@@ -1,6 +1,13 @@
 export interface Recipe {
-    id: string;
-    title: string;
-    content: string;
-    tags: object;
+    name: string;
+    description: string;
+    calories: {
+        total: number;
+        protein: number;
+        carbs: number;
+        fat: number;
+    }
+    image_url: string;
+    ingredients: string[];
+    steps: string[];
 }
