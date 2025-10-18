@@ -6,59 +6,59 @@ import "./globals.css";
 import * as Tabs from "@radix-ui/react-tabs";
 
 export default function Home() {
-  const [meat, setMeat] = useState("");
+    const [meat, setMeat] = useState("");
   const [veggies, setVeggies] = useState("");
   const [cuisine, setCuisine] = useState("");
 
   // Popular recipes with images and links
   const popularRecipes = [
-    { 
-      name: "Spaghetti Carbonara", 
-      meat: "Pork", 
-      veggies: "None", 
-      cuisine: "Italian", 
+    {
+      name: "Spaghetti Carbonara",
+      meat: "Pork",
+      veggies: "None",
+      cuisine: "Italian",
       image: "/popular_recipes/carbonara-recipe-1-1200px.jpg",
-      link: "https://www.recipesfromitaly.com/spaghetti-carbonara-original-recipe/" 
+      link: "https://www.recipesfromitaly.com/spaghetti-carbonara-original-recipe/"
     },
-    { 
-      name: "General Tso's Chicken", 
-      meat: "Chicken", 
-      veggies: "Broccoli", 
-      cuisine: "Chinese", 
+    {
+      name: "General Tso's Chicken",
+      meat: "Chicken",
+      veggies: "Broccoli",
+      cuisine: "Chinese",
       image: "/popular_recipes/General-Tsos-Chicken-4-1024x1536.jpg",
-      link: "https://natashaskitchen.com/general-tsos-chicken/" 
+      link: "https://natashaskitchen.com/general-tsos-chicken/"
     },
-    { 
-      name: "Pad Thai", 
-      meat: "Shrimp", 
-      veggies: "Bean Sprouts", 
-      cuisine: "Thai", 
+    {
+      name: "Pad Thai",
+      meat: "Shrimp",
+      veggies: "Bean Sprouts",
+      cuisine: "Thai",
       image: "/popular_recipes/pad_thai.jpg",
-      link: "https://www.gimmesomeoven.com/pad-thai/" 
+      link: "https://www.gimmesomeoven.com/pad-thai/"
     },
-    { 
-      name: "Beef Tacos", 
-      meat: "Beef", 
-      veggies: "Lettuce, Tomato", 
-      cuisine: "Mexican", 
+    {
+      name: "Beef Tacos",
+      meat: "Beef",
+      veggies: "Lettuce, Tomato",
+      cuisine: "Mexican",
       image: "/popular_recipes/taco-recipe-13-1.webp",
-      link: "https://kristineskitchenblog.com/ground-beef-tacos/" 
+      link: "https://kristineskitchenblog.com/ground-beef-tacos/"
     },
-    { 
-      name: "Ratatouille", 
-      meat: "None", 
-      veggies: "Eggplant, Zucchini, Tomato", 
-      cuisine: "French", 
+    {
+      name: "Ratatouille",
+      meat: "None",
+      veggies: "Eggplant, Zucchini, Tomato",
+      cuisine: "French",
       image: "/popular_recipes/rata.jpg",
-      link: "https://tasty.co/recipe/ratatouille" 
+      link: "https://tasty.co/recipe/ratatouille"
     },
-    { 
-      name: "Chicken Tikka Masala", 
-      meat: "Chicken", 
-      veggies: "Onion, Bell Pepper", 
-      cuisine: "Indian", 
+    {
+      name: "Chicken Tikka Masala",
+      meat: "Chicken",
+      veggies: "Onion, Bell Pepper",
+      cuisine: "Indian",
       image: "/popular_recipes/chicken tikka.jpg",
-      link: "https://cafedelites.com/chicken-tikka-masala/" 
+      link: "https://cafedelites.com/chicken-tikka-masala/"
     },
   ];
 
@@ -67,15 +67,16 @@ export default function Home() {
     if (!meat || !veggies || !cuisine) {
       alert("Please fill in all fields!");
       return;
-    }
+        }
     alert(`Analyzing your ${cuisine} dish with ${meat} and ${veggies}... 🍽️`);
   };
 
   const TabsDemo = () => (
-    <Tabs.Root defaultValue="tab1" className="bg-white p-4 rounded-lg w-[300px] text-black shadow-md">
-      <Tabs.List className="flex gap-2 mb-4 border-b border-orange-300">
+    <Tabs.Root defaultValue="tab1"
+            className="bg-white p-4 rounded-lg w-[300px] text-black shadow-md">
+            <Tabs.List className="flex gap-2 mb-4 border-b border-orange-300">
         <Tabs.Trigger value="tab1" className="py-1 px-3 hover:bg-orange-100 rounded">Tab 1</Tabs.Trigger>
-        <Tabs.Trigger value="tab2" className="py-1 px-3 hover:bg-orange-100 rounded">Tab 2</Tabs.Trigger>
+                <Tabs.Trigger value="tab2" className="py-1 px-3 hover:bg-orange-100 rounded">Tab 2</Tabs.Trigger>
         <Tabs.Trigger value="tab3" className="py-1 px-3 hover:bg-orange-100 rounded">Tab 3</Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content value="tab1">Content for Tab 1</Tabs.Content>
@@ -87,13 +88,14 @@ export default function Home() {
   return (
     <div className="font-sans text-black bg-gradient-to-b from-white via-orange-50 to-white min-h-screen flex flex-col">
       {/* Navbar */}
-      <nav className="w-full bg-white/80 backdrop-blur-md border-b border-orange-300 flex justify-between items-center px-8 py-4 sticky top-0 z-50">
+      <nav
+                            className="w-full bg-white/80 backdrop-blur-md border-b border-orange-300 flex justify-between items-center px-8 py-4 sticky top-0 z-50">
         <h1 className="text-3xl font-bold bg-gradient-to-r from-orange-500 via-red-500 to-yellow-400 bg-clip-text text-transparent">
           Flame On
         </h1>
         <ul className="flex gap-8 text-orange-700">
-          <li><a href="#" className="hover:text-orange-500 transition-colors">Home</a></li>
-          <li><a href="#upload" className="hover:text-orange-500 transition-colors">Upload</a></li>
+                    <li><a href="#" className="hover:text-orange-500 transition-colors">Home</a></li>
+                    <li><a href="#upload" className="hover:text-orange-500 transition-colors">Upload</a></li>
           <li><a href="#profile" className="hover:text-orange-500 transition-colors">Profile</a></li>
         </ul>
       </nav>
@@ -132,7 +134,7 @@ export default function Home() {
                   <p className="text-sm text-gray-600">{recipe.cuisine} | {recipe.meat} | {recipe.veggies}</p>
                 </div>
               </a>
-            ))}
+                        ))}
           </div>
         </section>
 
@@ -146,8 +148,8 @@ export default function Home() {
           id="upload"
         >
           <div className="flex flex-col gap-2">
-            <label htmlFor="meat" className="text-lg font-semibold text-orange-600">Type of Meat</label>
-            <input
+                        <label htmlFor="meat" className="text-lg font-semibold text-orange-600">Type of Meat</label>
+                        <input
               id="meat"
               type="text"
               value={meat}
@@ -157,7 +159,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2">
             <label htmlFor="veggies" className="text-lg font-semibold text-orange-600">Type of Vegetables</label>
             <input
               id="veggies"
@@ -169,7 +171,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2">
             <label htmlFor="cuisine" className="text-lg font-semibold text-orange-600">Cuisine Type</label>
             <input
               id="cuisine"
@@ -178,13 +180,13 @@ export default function Home() {
               onChange={(e) => setCuisine(e.target.value)}
               placeholder="Chinese, Italian, Vietnamese..."
               className="bg-white border border-orange-300 rounded p-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400"
-            />
+                        />
           </div>
 
           <button
             type="submit"
             className="bg-gradient-to-r from-red-500 via-orange-400 to-yellow-300 text-white font-bold py-2 rounded-full mt-4 hover:scale-105 hover:brightness-110 transition-transform shadow-[0_0_10px_rgba(255,150,0,0.4)]"
-          >
+                    >
             🔥 Submit
           </button>
         </form>
@@ -198,8 +200,8 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="text-center py-4 text-gray-500 border-t border-orange-200 bg-white">
-        © {new Date().getFullYear()} Flame On — Perfect your cook every time 🔥
-      </footer>
-    </div>
-  );
+                © {new Date().getFullYear()} Flame On — Perfect your cook every time 🔥
+            </footer>
+        </div>
+    );
 }

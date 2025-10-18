@@ -1,22 +1,22 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type {Metadata} from "next";
+import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import ThemeWrapper from "./components/ThemeWrapper";
 import ClientOnly from "./components/ClientOnly";
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+    variable: "--font-geist-sans",
+    subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+    variable: "--font-geist-mono",
+    subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Flame On",
-  description: "Check how cooked your meat is 🔥",
+    title: "Flame On",
+    description: "Check how cooked your meat is 🔥",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ClientOnly>
           <ThemeWrapper>{children}</ThemeWrapper>
         </ClientOnly>
-      </body>
-    </html>
-  );
+        </body>
+        </html>
+    );
 }
