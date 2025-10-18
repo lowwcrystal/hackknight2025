@@ -1,7 +1,6 @@
 import {createClient} from "@/utils/supabase/server";
 import {UserRecipe} from "@/types/userRecipe";
-import Link from "next/link";
-import Image from "next/image";
+import Recipe from "@/app/components/RecipeAttempt";
 
 export default async function DashboardPage() {
     const supabase = await createClient();
@@ -31,37 +30,19 @@ export default async function DashboardPage() {
 
     return (
         <main className="p-6">
-            <h1 className="text-2xl font-semibold mb-6">
-                Your Generated Recipes
-            </h1>
+            <h1 className="text-2xl font-semibold mb-6">Your Generated Recipes</h1>
 
             {userRecipes.length === 0 ? (
                 <p>No recipes found.</p>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {userRecipes.map((recipe, i) => (
-                        <Link
-                            key={i}
-                            href={`/recipe/${recipe.id}`}
-                            className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition block"
-                        >
-                            {recipe.imageUrl ? (
-                                <Image
-                                    src={recipe.imageUrl}
-                                    alt={recipe.title}
-                                    className="w-full h-40 object-cover"
-                                />
-                            ) : (
-                                <div className="w-full h-40 bg-gray-200 flex items-center justify-center text-gray-500">
-                                    No Image
-                                </div>
-                            )}
-                            <div className="p-3">
-                                <h2 className="font-semibold text-lg truncate">
-                                    {recipe.title}
-                                </h2>
-                            </div>
-                        </Link>
+                    {userRecipes.map((recipe) => (
+                        <Recipe
+                            key={recipe.id}
+                            id={recipe.id}
+                            title={recipe.title}
+                            imageUrl={recipe.imageUrl}
+                        />
                     ))}
                 </div>
             )}

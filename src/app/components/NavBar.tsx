@@ -22,7 +22,7 @@ export default function NavBar() {
           </Link>
         </li>
         <li>
-          <Link href="/auth/generate" className="hover:text-orange-500 transition-colors">
+            <Link href="/generate" className="hover:text-orange-500 transition-colors">
             Generate
           </Link>
         </li>
@@ -33,7 +33,7 @@ export default function NavBar() {
         </li>
         <li>
             <Link href="/dashboard" className="hover:text-orange-500 transition-colors">
-            Attempts
+                Dashboard
           </Link>
         </li>
 
