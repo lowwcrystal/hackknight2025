@@ -181,12 +181,7 @@ export default function Home() {
       </main>
       
       
-      {/* Profile Section *//*}
-      <section id="profile" className="bg-white py-8 text-center border-t border-orange-200">
-        <h3 className="text-2xl font-bold text-orange-500 mb-2">Your Profile</h3>
-        <p className="text-gray-600">Coming soon — track your cooking uploads and progress!</p>
-      </section>
-      */}
+      
         </div>
     );
 }

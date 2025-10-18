@@ -70,7 +70,7 @@ export default function UserMenu() {
   return (
     <div className="flex items-center gap-2">
       <button
-        onClick={() => router.push("/profile")}
+        onClick={() => router.push("/dashboard")}
         className="w-10 h-10 rounded-full bg-gradient-to-r from-red-500 via-orange-400 to-yellow-300 text-white flex items-center justify-center font-bold shadow-lg hover:scale-105 transition-transform"
       >
         {initials}
