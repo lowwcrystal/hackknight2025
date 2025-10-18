@@ -32,7 +32,7 @@ export default function NavBar() {
           </Link>
         </li>
         <li>
-          <Link href="/attempts" className="hover:text-orange-500 transition-colors">
+            <Link href="/dashboard" className="hover:text-orange-500 transition-colors">
             Attempts
           </Link>
         </li>

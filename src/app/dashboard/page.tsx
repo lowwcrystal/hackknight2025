@@ -1,68 +1,67 @@
-import Image from "next/image";
-import LogoutButton from "@/app/components/LogoutButton";
+import {createClient} from "@/utils/supabase/server";
+import {UserRecipe} from "@/types/userRecipe";
 
 export default async function DashboardPage() {
-  // Placeholder recipes array (empty for now)
-  const userRecipes: Array<{
-    name?: string;
-    meat?: string;
-    veggies?: string;
-    cuisine?: string;
-    image?: string;
-    link?: string;
-  }> = []; // empty, will be populated by user input
+    const supabase = await createClient();
+    const user = await supabase.auth.getUser();
 
-  return (
-    <main className="p-8 min-h-screen bg-gradient-to-b from-white via-orange-50 to-white">
-      <h1 className="text-3xl font-bold text-orange-500 mb-6">Your Recipes</h1>
-      <p className="text-gray-700 mb-6">Here’s where your uploaded recipes will appear! 🍽️</p>
+    if (!user.data.user) {
+        return <p>Please log in to view your dashboard.</p>;
+    }
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {userRecipes.length === 0 ? (
-          // Placeholder empty boxes
-          Array.from({ length: 6 }).map((_, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col items-center justify-center h-48 border border-orange-200 animate-pulse"
-            >
-              <div className="w-16 h-16 bg-orange-200 rounded-full mb-2"></div>
-              <div className="w-24 h-4 bg-orange-200 rounded mb-1"></div>
-              <div className="w-16 h-3 bg-orange-200 rounded"></div>
-            </div>
-          ))
-        ) : (
-          userRecipes.map((recipe, idx) => (
-            <a
-              key={idx}
-              href={recipe.link || "#"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform block"
-            >
-              {recipe.image && (
-                <div className="relative w-full h-32">
-                  <Image
-                    src={recipe.image}
-                    alt={recipe.name || "Recipe"}
-                    fill
-                    style={{ objectFit: "cover" }}
-                  />
+    const {data, error} = await supabase
+        .from("recipes")
+        .select(`id, title, image_path, recipe_requests!inner(user_id)`)
+        .eq("recipe_requests.user_id", user.data.user?.id)
+        .order("id", {ascending: false});
+
+    if (error) {
+        console.error("Error loading recipes:", error);
+        return <p>Failed to load recipes</p>;
+    }
+
+    const userRecipes: UserRecipe[] =
+        data?.map((r) => ({
+            id: r.id,
+            title: r.title,
+            imageUrl: r.image_path || null,
+        })) ?? [];
+
+    return (
+        <main className="p-6">
+            <h1 className="text-2xl font-semibold mb-6">
+                Your Generated Recipes
+            </h1>
+
+            {userRecipes.length === 0 ? (
+                <p>No recipes found.</p>
+            ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {userRecipes.map((recipe, i) => (
+                        <div
+                            key={i}
+                            className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition"
+                        >
+                            {recipe.imageUrl ? (
+                                <img
+                                    src={recipe.imageUrl}
+                                    alt={recipe.title}
+                                    className="w-full h-40 object-cover"
+                                />
+                            ) : (
+                                <div className="w-full h-40 bg-gray-200 flex items-center justify-center text-gray-500">
+                                    No Image
+                                </div>
+                            )}
+                            <div className="p-3">
+                                <h2 className="font-semibold text-lg truncate">
+                                    {recipe.title}
+                                </h2>
+                            </div>
+                        </div>
+                    ))}
                 </div>
-              )}
-              <div className="p-4">
-                <h4 className="font-semibold text-lg text-gray-800">{recipe.name}</h4>
-                <p className="text-sm text-gray-600">
-                  {recipe.cuisine} | {recipe.meat} | {recipe.veggies}
-                </p>
-              </div>
-            </a>
-          ))
-        )}
-      </div>
-
-      <div className="mt-8">
-        <LogoutButton />
-      </div>
-    </main>
-  );
+            )}
+        </main>
+    );
 }
