@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   description: "Check how cooked your meat is 🔥",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
