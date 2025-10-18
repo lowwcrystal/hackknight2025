@@ -18,12 +18,7 @@ export default async function RecipePage({params,}: {
     }
 
     return (
-        <section className="w-screen max-w-none mb-16 pt-20 px-6 sm:px-10">
-            {/* Title */}
-            <h2 className="text-5xl font-bold mb-10 pl-6 bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent">
-                Recipe
-            </h2>
-
+        <section className="w-screen max-w-none mb-16 pt-5 px-6 sm:px-5">
             <RecipeCard recipe={recipe}/>
         </section>
     );
