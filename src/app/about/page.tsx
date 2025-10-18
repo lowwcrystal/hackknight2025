@@ -106,7 +106,7 @@ export default function AboutPage() {
             Stop settling for takeout. Start cooking food that makes you feel amazing.
           </p>
           <a
-            href="/generate"
+            href="/"
             className="inline-block px-12 py-4 text-xl font-bold text-white uppercase rounded-full shadow-lg transition duration-300 
                bg-red-600 hover:bg-red-700 transform hover:scale-105"
           >

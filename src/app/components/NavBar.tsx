@@ -21,11 +21,7 @@ export default function NavBar() {
             About
           </Link>
         </li>
-        <li>
-            <Link href="/generate" className="hover:text-orange-500 transition-colors">
-            Generate
-          </Link>
-        </li>
+        
         <li>
           <Link href="/recipe" className="hover:text-orange-500 transition-colors">
             Recipes
