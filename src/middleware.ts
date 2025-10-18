@@ -38,7 +38,7 @@ export async function middleware(request: NextRequest) {
     const authPages = ['/auth/login', '/auth/sign-up', '/auth/forgot-password', '/auth/update-password']
 
     if (protectedPrefixes.some((p) => pathname.startsWith(p)) && !session) {
-        return NextResponse.redirect(new URL('/auth/login', request.url));
+        //return NextResponse.redirect(new URL('/auth/login', request.url));
     }
 
     if (authPages.some((p) => pathname.startsWith(p)) && session) {
