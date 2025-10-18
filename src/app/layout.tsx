@@ -5,6 +5,7 @@ import "@radix-ui/themes/styles.css"; // Import Radix styles globally
 import "./globals.css"; // Your existing global styles
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import UserMenu from "./components/UserMenu";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -22,20 +23,22 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-                                       children,
-                                   }: Readonly<{
-    children: React.ReactNode;
-}>) {
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {/* Wrap the app with Radix UI Theme */}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Theme>
-          <NavBar></NavBar>
-          {children}
-          <Footer></Footer>
+          <header>
+            <NavBar /> {/* NavBar now handles UserMenu internally */}
+          </header>
+
+
+          {/* Main content */}
+          <main className="min-h-screen">{children}</main>
+
+          {/* Footer */}
+          <Footer />
         </Theme>
       </body>
     </html>
