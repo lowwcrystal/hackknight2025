@@ -15,17 +15,15 @@ export default function RecipeCard({recipe}: RecipeProps) {
         .substring(content.indexOf("Instructions:") + "Instructions:".length)
         .split("\n")
         .filter(line => line.trim() !== "" && !line.startsWith("Instructions:"));
-    const tags = ["todo", "todo2", "todo3"]
+    const tags = Object.values(recipe.tags) as string[];
     return (
-        <a
+        <div
             key={recipe.id}
-            href={`/recipe/${recipe.id}`}
-            target="_blank"
             rel="noopener noreferrer"
-            className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform block"
+            className="overflow-hidden block"
         >
             <div className="p-4">
-                <h4 className="font-semibold text-lg text-gray-800 mb-2">
+                <h4 className="text-5xl font-bold mb-10 bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent">
                     {recipe.title}
                 </h4>
 
@@ -83,6 +81,6 @@ export default function RecipeCard({recipe}: RecipeProps) {
                     style={{objectFit: "cover"}}
                 />
             </div>
-        </a>
+        </div>
     );
 }
