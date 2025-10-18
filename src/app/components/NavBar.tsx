@@ -17,6 +17,11 @@ export default function NavBar() {
           </Link>
         </li>
         <li>
+          <Link href="/about" className="hover:text-orange-500 transition-colors">
+            About
+          </Link>
+        </li>
+        <li>
           <Link href="/auth/generate" className="hover:text-orange-500 transition-colors">
             Generate
           </Link>

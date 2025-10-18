@@ -60,11 +60,8 @@ export default function Footer() {
         {/*<a href="/generate" className="hover:underline">
           Cooking Tips
         </a>*/}
-        <a href="/recipe" className="hover:underline">
+        <a href="/about" className="hover:underline">
           About
-        </a>
-        <a href="/" className="hover:underline">
-          Contact
         </a>
       </nav>
 
