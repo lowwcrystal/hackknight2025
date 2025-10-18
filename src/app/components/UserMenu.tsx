@@ -37,6 +37,7 @@ export default function UserMenu() {
   };
 
   if (!session) {
+    // Show login/signup buttons
     return (
       <div className="flex gap-2">
         <button
@@ -55,13 +56,24 @@ export default function UserMenu() {
     );
   }
 
+  // Logged in: derive initials
+  const initials = (() => {
+    const email = session.user?.email || "";
+    if (!email) return "U";
+    return email
+      .split("@")[0] // take the part before @
+      .split(".") // split by dot if email has first.last
+      .map((part: string) => part[0].toUpperCase())
+      .join("");
+  })();
+
   return (
     <div className="flex items-center gap-2">
       <button
         onClick={() => router.push("/profile")}
         className="w-10 h-10 rounded-full bg-gradient-to-r from-red-500 via-orange-400 to-yellow-300 text-white flex items-center justify-center font-bold shadow-lg hover:scale-105 transition-transform"
       >
-        P
+        {initials}
       </button>
       <button
         onClick={handleLogout}
