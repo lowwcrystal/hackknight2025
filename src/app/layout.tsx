@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Theme } from "@radix-ui/themes"; // Import Radix Theme
 import "@radix-ui/themes/styles.css"; // Import Radix styles globally
 import "./globals.css"; // Your existing global styles
+import NavBar from "./components/NavBar";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
       >
         {/* Wrap the app with Radix UI Theme */}
         <Theme>
+          <NavBar></NavBar>
           {children}
         </Theme>
       </body>

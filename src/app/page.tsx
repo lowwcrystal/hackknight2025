@@ -4,6 +4,7 @@ import {useState} from "react";
 import Image from "next/image";
 import "./globals.css";
 import * as Tabs from "@radix-ui/react-tabs";
+import NavBar from "./components/NavBar";
 
 export default function Home() {
     const [meat, setMeat] = useState("");
@@ -87,7 +88,6 @@ export default function Home() {
 
   return (
     <div className="font-sans text-black bg-gradient-to-b from-white via-orange-50 to-white min-h-screen flex flex-col">
-
       {/* Main Content */}
       <main className="flex-grow flex flex-col items-center justify-center p-8 text-center">
         <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent">
