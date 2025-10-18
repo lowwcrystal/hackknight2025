@@ -8,7 +8,7 @@ export default function TeamPage() {
       name: "Alex Johnson",
       role: "Founder & Lead Developer",
       photo: "/images/team1.jpg",
-      qr: "/images/qr1.png",
+      qr: "public\\linkedin's\\46CB69BC-4B0C-4628-BB59-F1C68DD3EC1C.png",
     },
     {
       name: "Samantha Lee",
