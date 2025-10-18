@@ -1,5 +1,7 @@
 import {createClient} from "@/utils/supabase/server";
 import {UserRecipe} from "@/types/userRecipe";
+import Link from "next/link";
+import Image from "next/image";
 import Recipe from "@/app/components/RecipeAttempt";
 
 export default async function DashboardPage() {

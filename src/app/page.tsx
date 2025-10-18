@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import "./globals.css";
-import NavBar from "./components/NavBar";
 
 export default function Home() {
   const [meat, setMeat] = useState("");
@@ -131,35 +130,6 @@ export default function Home() {
             🔥 Submit
           </button>
         </form>
-
-        {/* Popular Recipes Section */}
-        <section className="w-full max-w-6xl">
-          <h3 className="text-left text-2xl font-bold text-orange-500 mb-4">Popular Recipes</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {popularRecipes.map((recipe, idx) => (
-              <a
-                key={idx}
-                href={recipe.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform block"
-              >
-                <div className="relative w-full h-32">
-                  <Image
-                    src={recipe.image}
-                    alt={recipe.name}
-                    fill
-                    style={{ objectFit: "cover" }}
-                  />
-                </div>
-                <div className="p-4">
-                  <h4 className="font-semibold text-lg text-gray-800">{recipe.name}</h4>
-                  <p className="text-sm text-gray-600">{recipe.cuisine} | {recipe.meat} | {recipe.veggies}</p>
-                </div>
-              </a>
-            ))}
-          </div>
-        </section>
       </main>
     </div>
   );
