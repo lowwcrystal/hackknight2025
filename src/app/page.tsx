@@ -49,7 +49,7 @@ export default function Home() {
             }
 
             // redirect to recipe page
-            router.push(`/recipes/${recipeId}`);
+            router.push(`/recipe/${recipeId}`);
         } catch (error) {
             console.error("Error submitting form:", error);
         } finally {
