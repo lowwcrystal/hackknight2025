@@ -6,6 +6,16 @@ export const runtime = "nodejs";
 
 const LABELS = ["raw","undercooked","cooked","overcooked","uncertain","not_food"] as const;
 
+interface EvaluationResult {
+  is_food: boolean;
+  label: "raw" | "undercooked" | "cooked" | "overcooked" | "uncertain" | "not_food";
+  quality_issues?: string[];
+  alignment_score: number;
+  alignment_notes?: string;
+  confidence: number;
+  advice?: string;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { userImageUrl, stepText } = await req.json();
@@ -64,7 +74,7 @@ Output ONLY JSON per schema.
 
     const text = result.text as string;
 
-    let json: any;
+    let json: EvaluationResult;
     try {
       json = JSON.parse(text);
     } catch {
