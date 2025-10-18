@@ -1,5 +1,7 @@
 import {createClient} from "@/utils/supabase/server";
 import {UserRecipe} from "@/types/userRecipe";
+import Link from "next/link";
+import Image from "next/image";
 
 export default async function DashboardPage() {
     const supabase = await createClient();
@@ -38,12 +40,13 @@ export default async function DashboardPage() {
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {userRecipes.map((recipe, i) => (
-                        <div
+                        <Link
                             key={i}
-                            className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition"
+                            href={`/recipe/${recipe.id}`}
+                            className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition block"
                         >
                             {recipe.imageUrl ? (
-                                <img
+                                <Image
                                     src={recipe.imageUrl}
                                     alt={recipe.title}
                                     className="w-full h-40 object-cover"
@@ -58,7 +61,7 @@ export default async function DashboardPage() {
                                     {recipe.title}
                                 </h2>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             )}

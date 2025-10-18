@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Theme } from "@radix-ui/themes"; // Import Radix Theme
+import type {Metadata} from "next";
+import {Geist, Geist_Mono} from "next/font/google";
+import {Theme} from "@radix-ui/themes"; // Import Radix Theme
 import "@radix-ui/themes/styles.css"; // Import Radix styles globally
 import "./globals.css"; // Your existing global styles
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import UserMenu from "./components/UserMenu";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",

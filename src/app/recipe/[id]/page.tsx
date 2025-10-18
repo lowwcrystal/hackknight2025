@@ -13,6 +13,11 @@ export default async function RecipePage({params,}: {
         .eq("id", id)
         .single<Recipe>();
 
+    if (error) {
+        console.error("Error loading recipe:", error);
+        return <p>Failed to load recipe</p>;
+    }
+
     if (!recipe) {
         return <div>Recipe not found</div>;
     }

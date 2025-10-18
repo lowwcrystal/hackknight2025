@@ -2,7 +2,7 @@
 
 import {motion} from "framer-motion";
 
-export default async function AboutPage() {
+export default function AboutPage() {
   return (
     <div className="font-sans text-gray-800 bg-white min-h-screen flex flex-col">
       
