@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function NavBar() {
     return (
         <nav
@@ -7,8 +9,20 @@ export default function NavBar() {
             </h1>
             <ul className="flex gap-8 text-orange-700">
                 <li><a href="#" className="hover:text-orange-500 transition-colors">Home</a></li>
-                <li><a href="#upload" className="hover:text-orange-500 transition-colors">Upload</a></li>
-                <li><a href="#profile" className="hover:text-orange-500 transition-colors">Profile</a></li>
+                <li><a href="#upload" className="hover:text-orange-500 transition-colors">Generate</a></li>
+                {/*<li><Link href="/auth/login" className="hover:text-orange-500 transition-colors">Login</Link></li>
+                <li><Link href="/auth/sign-up" className="hover:text-orange-500 transition-colors">Sign Up</Link></li>*/}
+                <li>
+                    <Link href="/auth/login"className="px-4 py-2 rounded-full border-2 border-orange-400 text-orange-400 font-medium transition-all duration-300 hover:bg-orange-400 hover:text-white hover:shadow-lg hover:scale-105">
+                        Login
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/auth/sign-up" className="px-4 py-2 rounded-full border-2 border-orange-400 text-orange-400 font-medium transition-all duration-300 hover:bg-orange-400 hover:text-white hover:shadow-lg hover:scale-105">
+                        Sign Up
+                    </Link>
+                </li>
+
             </ul>
         </nav>
     );
