@@ -12,7 +12,7 @@ export default function NavBar() {
                 <FlameTitle/>
             </h1>
 
-            <ul className="flex gap-8 items-center text-orange-700">
+            <ul className="flex gap-10 items-center text-orange-700">
                 <li>
                     <Link href="/" className="hover:text-orange-500 transition-colors">
                         Home
