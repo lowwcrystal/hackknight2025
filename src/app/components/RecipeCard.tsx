@@ -1,13 +1,15 @@
 import type {Recipe} from "@/types/recipe";
 import RoundedLike from "@/app/components/Rounded";
+import Image from "next/image";
 
 interface RecipeProps {
     id: string;
     recipe: Recipe;
     tags: string[];
+    imageUrl?: string;
 }
 
-export default function RecipeCard({id, recipe, tags}: RecipeProps) {
+export default function RecipeCard({id, recipe, tags, imageUrl}: RecipeProps) {
     const calories = [
         {label: "Total", value: recipe.calories.total},
         {label: "Protein", value: recipe.calories.protein},
@@ -79,8 +81,19 @@ export default function RecipeCard({id, recipe, tags}: RecipeProps) {
                                     </li>
                                 ))}
                             </ul>
-                            <div className="mt-4 text-xs text-gray-500 italic">
-                                *Values per serving
+                            <div className="mt-4 w-full h-40 relative rounded-lg overflow-hidden bg-gray-100">
+                                {imageUrl ? (
+                                    <Image
+                                        src={imageUrl}
+                                        alt={recipe.name}
+                                        fill
+                                        style={{objectFit: "cover"}}
+                                    />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center text-gray-500">
+                                        No Image
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

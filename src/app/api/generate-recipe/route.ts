@@ -26,14 +26,14 @@ export async function POST(req: NextRequest) {
         const supabase = await createClient();
         const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY!});
 
+        // 1️⃣ Generate the recipe content
         const instructions = `
 You are a professional chef and recipe developer. Generate a complete recipe based on the provided ingredients and cuisine type.
 
 Requirements:
-- Create a recipe with steps that uses the provided ingredients as the core components, while pantry ingredients can be used as well.
+- Create a recipe, with a condensed name, with steps that uses the provided ingredients as the core components, while pantry ingredients can be used as well.
 - Match the specified cuisine style and cooking techniques
 - Provide accurate calorie estimation per category, the serving size is one person
-- Generate a realistic image URL using Unsplash or similar stock photo services (use format like: https://images.unsplash.com/photo-[timestamp]-[id]?ixlib=rb-4.0.3&ixid=[id]&auto=format&fit=crop&w=800&q=80)
 - Include appropriate prep time and cook time
 - Make the recipe practical and achievable for home cooks
 - The recipe should be a single serving and healthy. 
@@ -59,14 +59,13 @@ Output ONLY JSON per the schema.
                     },
                     required: ["total", "protein", "carbs", "fat"]
                 },
-                image_url: {type: "string"},
                 ingredients: {type: "array", items: {type: "string"}},
                 steps: {type: "array", items: {type: "string"}},
             },
-            required: ["name", "description", "calories", "image_url", "ingredients", "steps"]
+            required: ["name", "description", "calories", "ingredients", "steps"]
         } as const;
 
-        const result = await ai.models.generateContent({
+        const recipeResult = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: [{role: "user", parts: [{text: instructions}]}],
             config: {
@@ -75,16 +74,67 @@ Output ONLY JSON per the schema.
             }
         });
 
-        if (!result) {
+        if (!recipeResult) {
             return NextResponse.json({error: "Empty model response"}, {status: 502});
         }
 
         let recipeData: Recipe;
         try {
-            recipeData = JSON.parse(result.text as string);
+            recipeData = JSON.parse(recipeResult.text as string);
         } catch (error) {
             console.error("Failed to parse JSON response:", error);
             return NextResponse.json({error: "Invalid AI response"}, {status: 502});
+        }
+
+        // Image generation using Cloudflare Workers AI
+        const imagePrompt = `A high-quality, realistic photo of "${recipeData.name}" with ingredients: ${recipeData.ingredients.join(", ")}, styled as a ${cuisine} dish.`;
+
+        const CLOUDFLARE_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID!;
+        const CLOUDFLARE_API_TOKEN = process.env.CLOUDFLARE_API_TOKEN!;
+
+        // Call Cloudflare Workers AI
+        const imageResponse = await fetch(
+            `https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/ai/run/@cf/stabilityai/stable-diffusion-xl-base-1.0`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${CLOUDFLARE_API_TOKEN}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({prompt: imagePrompt}),
+            }
+        );
+
+        // Cloudflare may return binary (PNG) or JSON
+        const contentType = imageResponse.headers.get("content-type");
+
+        let imageBuffer: Buffer;
+
+        if (contentType && contentType.includes("application/json")) {
+            // JSON response with base64 field
+            const resultJson = await imageResponse.json();
+            const base64 = resultJson.result?.image;
+            if (!base64) throw new Error("No image found in JSON response");
+            imageBuffer = Buffer.from(base64, "base64");
+        } else {
+            // Binary image (PNG) returned directly
+            const arrayBuffer = await imageResponse.arrayBuffer();
+            imageBuffer = Buffer.from(arrayBuffer);
+        }
+
+        // Upload to Supabase
+        const imagePath = `recipes/${Date.now()}.png`;
+
+        const {data, error} = await supabase.storage
+            .from("recipe-images")
+            .upload(imagePath, imageBuffer, {
+                contentType: "image/png",
+                upsert: true,
+            });
+
+        if (error) {
+            console.error("Supabase upload error:", error);
+            return NextResponse.json({error: "Image upload error"}, {status: 502});
         }
 
         const {data: requestData, error: requestError} = await supabase
@@ -103,15 +153,14 @@ Output ONLY JSON per the schema.
 
         const {data: recipeRow} = await supabase
             .from("recipes")
-            .insert([
-                {
-                    request_id: requestData.id,
-                    title: recipeData.name,
-                    prompt: promptText,
-                    content: recipeContent,
-                    tags: [cuisine, ...ingredients],
-                },
-            ])
+            .insert([{
+                request_id: requestData.id,
+                title: recipeData.name,
+                prompt: promptText,
+                content: recipeContent,
+                tags: [cuisine, ...ingredients],
+                image_path: imagePath || null,
+            }])
             .select("id")
             .single();
 

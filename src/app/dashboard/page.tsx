@@ -22,15 +22,26 @@ export default async function DashboardPage() {
     }
 
     const userRecipes: UserRecipe[] =
-        data?.map((r) => ({
+        data?.map((r) =>
+            ({
             id: r.id,
             title: r.title,
             imageUrl: r.image_path || null,
         })) ?? [];
 
+    userRecipes.forEach(row => {
+        if (!row.imageUrl) return;
+        const {data} = supabase.storage
+            .from("recipe-images")
+            .getPublicUrl(row.imageUrl);
+        row.imageUrl = data.publicUrl;
+    })
+
     return (
         <main className="p-6">
-            <h1 className="text-2xl font-semibold mb-6">Your Generated Recipes</h1>
+            <h4 className="text-5xl font-bold mb-5 bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent">
+                Your Generated Recipes
+            </h4>
 
             {userRecipes.length === 0 ? (
                 <p>No recipes found.</p>
