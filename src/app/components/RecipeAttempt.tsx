@@ -10,7 +10,7 @@ export default function Recipe({id, title, imageUrl}: RecipeProps) {
     return (
         <a
             href={`/recipe/${id}`}
-            className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform block"
+            className="bg-orange-50 rounded-xl shadow-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform block"
         >
             <div className="p-4">
                 <h4 className="font-semibold text-lg text-gray-800">{title}</h4>
