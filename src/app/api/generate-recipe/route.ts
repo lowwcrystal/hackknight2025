@@ -31,12 +31,12 @@ export async function POST(req: NextRequest) {
 You are a professional chef and recipe developer. Generate a complete recipe based on the provided ingredients and cuisine type.
 
 Requirements:
-- Create a recipe, with a condensed name, with steps that uses the provided ingredients as the core components, while pantry ingredients can be used as well.
+- Create a recipe, with a condensed name, with 5-15 detailed steps that uses the provided ingredients as the core components, while pantry ingredients can be used as well.
 - Match the specified cuisine style and cooking techniques
 - Provide accurate calorie estimation per category, the serving size is one person
 - Include appropriate prep time and cook time
 - Make the recipe practical and achievable for home cooks
-- The recipe should be a single serving and healthy. 
+- The recipe should be a single serving and very healthy. 
 
 Ingredients provided: ${ingredients.join(", ")}
 Cuisine: ${cuisine}
