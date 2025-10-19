@@ -29,7 +29,9 @@ export default async function RecipePage() {
 
     return (
         <main className="p-6">
-            <h1 className="text-2xl font-semibold mb-6">All Generated Recipes</h1>
+            <h4 className="text-5xl font-bold mb-5 bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent">
+                All Generated Recipes
+            </h4>
 
             {userRecipes.length === 0 ? (
                 <p>No recipes found.</p>
