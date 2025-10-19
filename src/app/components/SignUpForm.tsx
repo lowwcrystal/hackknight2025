@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import {useState} from "react";
+import {useRouter} from "next/navigation";
 import Link from "next/link";
-import { createClient } from "@/utils/supabase/client";
+import {createClient} from "@/utils/supabase/client";
 
 export default function SignUpForm() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function SignUpForm() {
 
     if (error) return setError(error.message);
 
-    router.push("/auth/login");
+      router.push("/dashboard");
   };
 
   return (
