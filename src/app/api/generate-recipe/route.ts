@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
 You are a professional chef and recipe developer. Generate a complete recipe based on the provided ingredients and cuisine type.
 
 Requirements:
-- Create a recipe with steps that uses the provided ingredients as the core components, while pantry ingredients can be used as well.
+- Create a recipe, with a condensed name, with steps that uses the provided ingredients as the core components, while pantry ingredients can be used as well.
 - Match the specified cuisine style and cooking techniques
 - Provide accurate calorie estimation per category, the serving size is one person
 - Include appropriate prep time and cook time
