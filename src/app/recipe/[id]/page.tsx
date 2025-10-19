@@ -40,12 +40,13 @@ export default async function RecipePage({params,}: {
                         Your Attempts
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-8 gap-6">
-                        <div
+                        <a
+                            href={`${id}/evaluator`}
                             className="bg-gradient-to-b from-yellow-100 to-orange-50 rounded-xl shadow-md border border-orange-200 p-0 overflow-hidden">
                             <div className="bg-orange-500 text-white text-lg font-semibold py-25 text-center">
                                 +
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
