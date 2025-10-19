@@ -10,7 +10,10 @@ export default async function Page() {
         
               {/* Attempt Grid */}
               <div className="grid grid-cols-1">
-                <RecipeAttempt /><RecipeAttempt /><RecipeAttempt /><RecipeAttempt />
+                <RecipeAttempt id="1" title="Sample Recipe 1" />
+                <RecipeAttempt id="2" title="Sample Recipe 2" />
+                <RecipeAttempt id="3" title="Sample Recipe 3" />
+                <RecipeAttempt id="4" title="Sample Recipe 4" />
               </div>
             </section>
     );

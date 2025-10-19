@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function TeamPage() {
   const team = [
@@ -63,9 +64,11 @@ export default function TeamPage() {
           >
             {/* Profile Photo */}
             <div className="w-32 h-32 mb-4 rounded-full bg-gray-200 overflow-hidden border-4 border-orange-200">
-              <img
+              <Image
                 src={member.photo}
                 alt={member.name}
+                width={128}
+                height={128}
                 className="object-cover w-full h-full"
               />
             </div>
@@ -81,9 +84,11 @@ export default function TeamPage() {
             {member.qr && (
               <>
                 <div className="w-24 h-24 mt-auto rounded-xl bg-gray-100 overflow-hidden border border-gray-300">
-                  <img
+                  <Image
                     src={member.qr}
                     alt={`${member.name}'s LinkedIn QR`}
+                    width={96}
+                    height={96}
                     className="object-cover w-full h-full"
                   />
                 </div>
