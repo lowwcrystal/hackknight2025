@@ -85,21 +85,6 @@ export default function RecipeCard({id, recipe, tags}: RecipeProps) {
                         </div>
                     </div>
                 </div>
-
-
-                {/*/!* User Photos Section *!/*/}
-                {/*<section className="mt-8">*/}
-                {/*    <h5 className="text-3xl font-semibold text-orange-600 mt-10 mb-4">Your Attempts</h5>*/}
-                {/*    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">*/}
-                {/*        {userPhotos.map((photo, idx) => (*/}
-                {/*            <RoundedLike*/}
-                {/*                key={idx}*/}
-                {/*            >*/}
-                {/*                <div></div>*/}
-                {/*            </RoundedLike>*/}
-                {/*        ))}*/}
-                {/*    </div>*/}
-                {/*</section>*/}
             </div>
         </div>
     );

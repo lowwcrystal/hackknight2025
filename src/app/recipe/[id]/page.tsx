@@ -27,8 +27,28 @@ export default async function RecipePage({params,}: {
         return <div>Recipe not found</div>;
     }
     return (
-        <section className="w-screen max-w-none mb-16 pt-5 px-6 sm:px-5">
+        <section className="max-w-none mb-16 pt-5 px-6 sm:px-5">
             <RecipeCard id={id} recipe={JSON.parse(row.content)} tags={row.tags}/>
+
+            <div
+                key={id}
+                rel="noopener noreferrer"
+                className="overflow-hidden block"
+            >
+                <div className="p-4">
+                    <h4 className="text-5xl font-bold mb-5 bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent">
+                        Your Attempts
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-8 gap-6">
+                        <div
+                            className="bg-gradient-to-b from-yellow-100 to-orange-50 rounded-xl shadow-md border border-orange-200 p-0 overflow-hidden">
+                            <div className="bg-orange-500 text-white text-lg font-semibold py-25 text-center">
+                                +
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     );
 }
