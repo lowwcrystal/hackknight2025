@@ -19,6 +19,14 @@ export default async function RecipePage() {
         return <div>Recipes not found</div>;
     }
 
+    userRecipes.forEach(row => {
+        if (!row.image_path) return;
+        const {data} = supabase.storage
+            .from("recipe-images")
+            .getPublicUrl(row.image_path);
+        row.imageUrl = data.publicUrl;
+    })
+
     return (
         <main className="p-6">
             <h1 className="text-2xl font-semibold mb-6">All Generated Recipes</h1>
