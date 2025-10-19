@@ -15,9 +15,10 @@ interface RecipeStepsProps {
   steps: RecipeStep[];
   selectedStep: RecipeStep | null;
   onStepSelect: (step: RecipeStep) => void;
+  completedSteps: Set<number>;
 }
 
-export default function RecipeSteps({ steps, selectedStep, onStepSelect }: RecipeStepsProps) {
+export default function RecipeSteps({ steps, selectedStep, onStepSelect, completedSteps }: RecipeStepsProps) {
   return (
     <div className="w-full lg:w-1/2 bg-orange-50 p-6">
       <h1 className="text-2xl font-bold text-orange-600 mb-6">Recipe Steps</h1>
@@ -34,16 +35,21 @@ export default function RecipeSteps({ steps, selectedStep, onStepSelect }: Recip
           >
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="bg-orange-500 text-white px-2 py-1 rounded text-sm font-medium">
-                    Step {step.step_number}
-                  </span>
-                  {step.image_required && (
-                    <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
-                      Image Required
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="bg-orange-500 text-white px-2 py-1 rounded text-sm font-medium">
+                      Step {step.step_number}
                     </span>
-                  )}
-                </div>
+                    {step.image_required && (
+                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
+                        Image Required
+                      </span>
+                    )}
+                    {completedSteps.has(step.id) && (
+                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">
+                        ✅ Completed
+                      </span>
+                    )}
+                  </div>
                 <p className="text-gray-700">{step.instruction}</p>
                 {step.estimated_time_minutes && (
                   <p className="text-sm text-gray-500 mt-2">

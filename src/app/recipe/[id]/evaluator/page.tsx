@@ -39,6 +39,7 @@ export default function EvaluatorPage() {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [evaluation, setEvaluation] = useState<EvaluationResult | null>(null);
   const [evaluating, setEvaluating] = useState(false);
+  const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fetchRecipeSteps = useCallback(async () => {
@@ -92,10 +93,13 @@ export default function EvaluatorPage() {
   };
 
   const handleEvaluateStep = async () => {
-    if (!selectedStep || !uploadedImage) return;
+    if (!selectedStep || !uploadedImage) {
+      return;
+    }
 
     setEvaluating(true);
     try {
+      // First, evaluate the step with AI
       const response = await fetch('/api/validate-step', {
         method: 'POST',
         headers: {
@@ -113,6 +117,19 @@ export default function EvaluatorPage() {
 
       const data = await response.json();
       setEvaluation(data.result);
+
+      // Mark this step as completed (no database saving for anonymous users)
+      setCompletedSteps(prev => new Set([...prev, selectedStep.id]));
+      
+      // Check if all steps are completed
+      const allStepsCompleted = steps.every(step => 
+        completedSteps.has(step.id) || step.id === selectedStep.id
+      );
+      
+      if (allStepsCompleted) {
+        // Show completion message
+        alert('🎉 Congratulations! You have completed the entire recipe!');
+      }
     } catch (err) {
       console.error('Error evaluating step:', err);
       setError('Failed to evaluate step');
@@ -146,12 +163,14 @@ export default function EvaluatorPage() {
     );
   }
 
+
   return (
     <div className="flex flex-col lg:flex-row min-h-screen">
       <RecipeSteps 
         steps={steps} 
         selectedStep={selectedStep} 
-        onStepSelect={handleStepSelect} 
+        onStepSelect={handleStepSelect}
+        completedSteps={completedSteps}
       />
       
       <div className="w-full lg:w-1/2 bg-yellow-50 p-6">
