@@ -1,4 +1,4 @@
-import {crenpateClient} from "@/utils/supabase/server";
+import {createClient} from "@/utils/supabase/server";
 import RecipeCard from "../../components/RecipeCard";
 
 interface RecipeRow {
