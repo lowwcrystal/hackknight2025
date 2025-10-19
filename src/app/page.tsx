@@ -59,14 +59,25 @@ export default function Home() {
 
     return (
         <div
-            className="font-sans text-black bg-gradient-to-b from-white via-orange-50 to-white min-h-screen flex flex-col">
+            className="font-sans text-black bg-gradient-to-b from-white via-orange-50 to-white min-h-screen flex flex-col"
+            style={{
+                backgroundImage: "url('/flames.jpg')",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                backgroundAttachment: "fixed"
+            }}
+        >
             <main className="flex-grow flex flex-col items-center justify-center p-8 text-center">
                 <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent">
-                    Turn the heat up!
+                    TURN THE HEAT UP!!!
                 </h2>
-                <p className="text-gray-700 mb-8 max-w-xl">
-                    Tell us what’s in your dish, and Flame On will generate a personalized recipe! 🍽️
-                </p>
+                <div className="text-neutral-50 mb-8 max-w-xl">
+                    Tell us what’s in your dish, and Flame On will generate a personalized recipe!
+                    <div className="text-6xl">
+                        🍽️
+                    </div>
+                </div>
 
                 <form
                     onSubmit={handleSubmit}

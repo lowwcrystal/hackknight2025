@@ -17,29 +17,37 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Flame On",
-  description: "Check how cooked your meat is 🔥",
+    title: "Flame On",
+    description: "Check how cooked your meat is 🔥",
 };
 
 export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
-  return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+                                       children,
+                                   }: Readonly<{ children: React.ReactNode }>) {
+    return (
+        <html lang="en">
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Theme>
-          <header>
-            <NavBar /> {/* NavBar now handles UserMenu internally */}
-          </header>
+            <header>
+                <NavBar/> {/* NavBar now handles UserMenu internally */}
+            </header>
 
 
-          {/* Main content */}
-          <main className="min-h-screen">{children}</main>
+            {/* Main content */}
+            <main className="min-h-screen"
+                  style={{
+                      backgroundImage: "url('/flames.jpg')",
+                      backgroundSize: "cover",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      backgroundAttachment: "fixed"
+                  }}
+            >{children}</main>
 
-          {/* Footer */}
-          <Footer />
+            {/* Footer */}
+            <Footer/>
         </Theme>
-      </body>
-    </html>
-  );
+        </body>
+        </html>
+    );
 }
