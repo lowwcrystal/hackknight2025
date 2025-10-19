@@ -1,4 +1,4 @@
-import {Facebook, Instagram, Youtube} from "lucide-react";
+import { Facebook, Instagram, Youtube } from "lucide-react";
 import Link from "next/link";
 
 export default function Footer() {
@@ -23,7 +23,6 @@ export default function Footer() {
         >
           <Youtube size={38} />
         </a>
-        {/* Custom X (Twitter) Logo */}
         <a
           href="https://x.com"
           target="_blank"
@@ -52,18 +51,18 @@ export default function Footer() {
 
       {/* Navbar Links */}
       <nav className="flex flex-wrap justify-center gap-10 mt-4 text-lg font-medium">
-          <Link href="/" className="hover:underline">
+        <Link href="/" className="hover:underline">
           Home
-          </Link>
-          <Link href="/generate" className="hover:underline">
+        </Link>
+        <Link href="/recipes" className="hover:underline">
           Recipes
-          </Link>
-        {/*<a href="/generate" className="hover:underline">
-          Cooking Tips
-        </a>*/}
-          <Link href="/about" className="hover:underline">
+        </Link>
+        <Link href="/about" className="hover:underline">
           About
-          </Link>
+        </Link>
+        <Link href="/contact" className="hover:underline">
+          Contact
+        </Link>
       </nav>
 
       {/* Main Footer Text */}
