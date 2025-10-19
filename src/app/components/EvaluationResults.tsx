@@ -50,7 +50,7 @@ export default function EvaluationResults({ evaluation }: EvaluationResultsProps
 
         {evaluation.is_food === false && (
           <div className="p-2 bg-red-100 text-red-800 rounded text-sm">
-            ⚠️ This doesn't appear to be food
+            ⚠️ This doesn&apos;t appear to be food
           </div>
         )}
 

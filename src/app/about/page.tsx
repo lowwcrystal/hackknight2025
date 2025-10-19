@@ -1,6 +1,7 @@
 "use client";
 
 import {motion} from "framer-motion";
+import Link from "next/link";
 
 export default function AboutPage() {
   return (
@@ -105,13 +106,13 @@ export default function AboutPage() {
           <p className="text-lg text-gray-600 mb-6">
             Stop settling for takeout. Start cooking food that makes you feel amazing.
           </p>
-          <a
+          <Link
             href="/"
             className="inline-block px-12 py-4 text-xl font-bold text-white uppercase rounded-full shadow-lg transition duration-300
                bg-red-600 hover:bg-red-700 transform hover:scale-105"
           >
             Turn Your Flame On!
-          </a>
+          </Link>
         </motion.section>
       </main>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import RecipeSteps from "@/app/components/RecipeSteps";
@@ -41,13 +41,7 @@ export default function EvaluatorPage() {
   const [evaluating, setEvaluating] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (recipeId) {
-      fetchRecipeSteps();
-    }
-  }, [recipeId]);
-
-  const fetchRecipeSteps = async () => {
+  const fetchRecipeSteps = useCallback(async () => {
     try {
       const supabase = createClient();
       const { data, error } = await supabase
@@ -68,7 +62,13 @@ export default function EvaluatorPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [recipeId]);
+
+  useEffect(() => {
+    if (recipeId) {
+      fetchRecipeSteps();
+    }
+  }, [recipeId, fetchRecipeSteps]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

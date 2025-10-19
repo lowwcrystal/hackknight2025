@@ -2,10 +2,7 @@ import {createClient} from "@/utils/supabase/server";
 import Recipe from "@/app/components/RecipeAttempt";
 import {UserRecipe} from "@/types/userRecipe";
 
-export default async function RecipePage({params,}: {
-    params: Promise<{ id: string }>
-}) {
-    const {id} = await params;
+export default async function RecipePage() {
     const supabase = await createClient();
     const {data: userRecipes, error} = await supabase
         .from("recipes")

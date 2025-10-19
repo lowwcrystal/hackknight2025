@@ -1,11 +1,24 @@
 "use client";
 
+import Image from "next/image";
+
+interface RecipeStep {
+  id: number;
+  recipe_id: number;
+  step_number: number;
+  instruction: string;
+  image_required: boolean;
+  estimated_time_minutes?: number;
+  temperature?: string;
+  equipment?: string[];
+}
+
 interface EvaluateButtonProps {
   onImageUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onEvaluateStep: () => void;
   uploadedImage: string | null;
   evaluating: boolean;
-  selectedStep: any;
+  selectedStep: RecipeStep | null;
   fileInputRef?: React.RefObject<HTMLInputElement | null>;
 }
 
@@ -40,9 +53,11 @@ export default function EvaluateButton({
             
             {uploadedImage && (
               <div className="mt-4">
-                <img
+                <Image
                   src={uploadedImage}
                   alt="Uploaded step"
+                  width={400}
+                  height={256}
                   className="max-w-full h-64 object-cover rounded-lg border"
                 />
               </div>
