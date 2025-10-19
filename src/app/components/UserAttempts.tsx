@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { createClient } from "@/utils/supabase/client";
+import {useEffect, useState} from "react";
+import {createClient} from "@/utils/supabase/client";
 import Link from "next/link";
 
 interface Attempt {
@@ -95,12 +95,6 @@ export default function UserAttempts({ recipeId }: UserAttemptsProps) {
   if (!user) {
     return (
       <div className="p-4">
-        <h4 className="text-5xl font-bold mb-5 bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent">
-          Your Attempts
-        </h4>
-        <div className="text-center py-4 text-gray-600">
-          Please log in to view your attempts
-        </div>
       </div>
     );
   }
