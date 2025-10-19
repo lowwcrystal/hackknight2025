@@ -22,11 +22,20 @@ export default async function DashboardPage() {
     }
 
     const userRecipes: UserRecipe[] =
-        data?.map((r) => ({
+        data?.map((r) =>
+            ({
             id: r.id,
             title: r.title,
             imageUrl: r.image_path || null,
         })) ?? [];
+
+    userRecipes.forEach(row => {
+        if (!row.imageUrl) return;
+        const {data} = supabase.storage
+            .from("recipe-images")
+            .getPublicUrl(row.imageUrl);
+        row.imageUrl = data.publicUrl;
+    })
 
     return (
         <main className="p-6">
