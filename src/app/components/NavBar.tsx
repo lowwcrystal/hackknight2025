@@ -23,7 +23,7 @@ export default function NavBar() {
         </li>
         
         <li>
-          <Link href="/recipe" className="hover:text-orange-500 transition-colors">
+            <Link href="/recipes" className="hover:text-orange-500 transition-colors">
             Recipes
           </Link>
         </li>
