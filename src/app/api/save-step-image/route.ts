@@ -3,10 +3,20 @@ import { createClient } from "@/utils/supabase/server";
 
 export const runtime = "nodejs";
 
+interface EvaluationResult {
+  is_food: boolean;
+  label: "raw" | "undercooked" | "cooked" | "overcooked" | "uncertain" | "not_food";
+  quality_issues?: string[];
+  alignment_score: number;
+  alignment_notes?: string;
+  confidence: number;
+  advice?: string;
+}
+
 interface SaveStepImageRequest {
   step_id: number;
   image_url: string;
-  ai_response: any;
+  ai_response: EvaluationResult;
   accuracy: number;
   user_id: string;
 }
