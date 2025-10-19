@@ -19,7 +19,7 @@ interface UserAttemptsProps {
 
 export default function UserAttempts({ recipeId }: UserAttemptsProps) {
   const [attempts, setAttempts] = useState<Attempt[]>([]);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<{ id: string } | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

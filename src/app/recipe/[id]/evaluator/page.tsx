@@ -41,8 +41,8 @@ export default function EvaluatorPage() {
   const [evaluation, setEvaluation] = useState<EvaluationResult | null>(null);
   const [evaluating, setEvaluating] = useState(false);
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
-  const [currentAttempt, setCurrentAttempt] = useState<any>(null);
-  const [user, setUser] = useState<any>(null);
+  const [currentAttempt, setCurrentAttempt] = useState<{ id: number } | null>(null);
+  const [user, setUser] = useState<{ id: string } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fetchRecipeSteps = useCallback(async () => {
@@ -68,13 +68,6 @@ export default function EvaluatorPage() {
     }
   }, [recipeId]);
 
-  useEffect(() => {
-    if (recipeId) {
-      fetchRecipeSteps();
-      checkUserAndAttempts();
-    }
-  }, [recipeId, fetchRecipeSteps]);
-
   const checkUserAndAttempts = useCallback(async () => {
     try {
       const supabase = createClient();
@@ -86,7 +79,7 @@ export default function EvaluatorPage() {
         const response = await fetch(`/api/recipe-attempts?recipe_id=${recipeId}&user_id=${user.id}`);
         if (response.ok) {
           const data = await response.json();
-          const inProgressAttempt = data.attempts.find((attempt: any) => attempt.status === 'in_progress');
+          const inProgressAttempt = data.attempts.find((attempt: { status: string; id: number }) => attempt.status === 'in_progress');
           if (inProgressAttempt) {
             setCurrentAttempt(inProgressAttempt);
           }
@@ -96,6 +89,13 @@ export default function EvaluatorPage() {
       console.error('Error checking user and attempts:', err);
     }
   }, [recipeId]);
+
+  useEffect(() => {
+    if (recipeId) {
+      fetchRecipeSteps();
+      checkUserAndAttempts();
+    }
+  }, [recipeId, fetchRecipeSteps, checkUserAndAttempts]);
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

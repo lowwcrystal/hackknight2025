@@ -125,7 +125,7 @@ Output ONLY JSON per the schema.
         // Upload to Supabase
         const imagePath = `recipes/${Date.now()}.png`;
 
-        const {data, error} = await supabase.storage
+        const {error} = await supabase.storage
             .from("recipe-images")
             .upload(imagePath, imageBuffer, {
                 contentType: "image/png",
