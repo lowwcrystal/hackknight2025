@@ -32,7 +32,7 @@ export default function RecipeCard({id, recipe, tags, imageUrl}: RecipeProps) {
                     {tags.map((tag: string, idx: number) => (
                         <span
                             key={idx}
-                            className="px-2 py-1 border rounded-full text-sm text-gray-600"
+                            className="px-2 py-1 border rounded-full text-sm text-neutral-50"
                         >
               {tag}
             </span>
