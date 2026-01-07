@@ -77,7 +77,11 @@ export default function RecipeCard({id, recipe, tags, imageUrl}: RecipeProps) {
                                         className="flex justify-between text-gray-800 text-sm"
                                     >
                                         <span className="font-medium">{item.label}</span>
-                                        <span>{item.value}</span>
+                                        <span>
+                                            {item.label === "Total" 
+                                                ? item.value 
+                                                : `${item.value}g`}
+                                        </span>
                                     </li>
                                 ))}
                             </ul>

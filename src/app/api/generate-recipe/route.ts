@@ -81,60 +81,114 @@ Output ONLY JSON per the schema.
         let recipeData: Recipe;
         try {
             recipeData = JSON.parse(recipeResult.text as string);
+            
+            // Add "g" to the end of each measurement in ingredients
+            recipeData.ingredients = recipeData.ingredients.map((ingredient: string) => {
+                // Common units that shouldn't get "g" added
+                const units = ['g', 'kg', 'ml', 'l', 'cup', 'cups', 'tbsp', 'tsp', 'oz', 'lb', 'pound', 'pounds', 'piece', 'pieces'];
+                const unitPattern = new RegExp(`\\b(${units.join('|')})\\b`, 'i');
+                
+                // Find numbers (with optional decimals) followed by space or end of string
+                // and add "g" if not already followed by a unit
+                return ingredient.replace(/(\d+(?:\.\d+)?)(\s+|$)/g, (match, number, space, offset, fullString) => {
+                    const afterMatch = fullString.substring(offset + match.length);
+                    const trimmedAfter = afterMatch.trim();
+                    
+                    // If there's already a unit word after the number, don't add "g"
+                    if (unitPattern.test(trimmedAfter)) {
+                        return match;
+                    }
+                    // If the number is already followed by "g", don't add another
+                    if (trimmedAfter.toLowerCase().startsWith('g')) {
+                        return match;
+                    }
+                    // Otherwise, add "g" after the number
+                    return `${number}g${space}`;
+                });
+            });
         } catch (error) {
             console.error("Failed to parse JSON response:", error);
             return NextResponse.json({error: "Invalid AI response"}, {status: 502});
         }
 
-        // Image generation using Cloudflare Workers AI
-        const imagePrompt = `A high-quality, realistic photo of "${recipeData.name}" with ingredients: ${recipeData.ingredients.join(", ")}, styled as a ${cuisine} dish.`;
+        // Image generation using Cloudflare Workers AI (optional - recipe can be created without image)
+        let imagePath: string | null = null;
+        
+        try {
+            const imagePrompt = `A high-quality, realistic photo of "${recipeData.name}" with ingredients: ${recipeData.ingredients.join(", ")}, styled as a ${cuisine} dish.`;
 
-        const CLOUDFLARE_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID!;
-        const CLOUDFLARE_API_TOKEN = process.env.CLOUDFLARE_API_TOKEN!;
+            const CLOUDFLARE_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
+            const CLOUDFLARE_API_TOKEN = process.env.CLOUDFLARE_API_TOKEN;
 
-        // Call Cloudflare Workers AI
-        const imageResponse = await fetch(
-            `https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/ai/run/@cf/stabilityai/stable-diffusion-xl-base-1.0`,
-            {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${CLOUDFLARE_API_TOKEN}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({prompt: imagePrompt}),
+            if (CLOUDFLARE_ACCOUNT_ID && CLOUDFLARE_API_TOKEN) {
+                // Call Cloudflare Workers AI
+                const imageResponse = await fetch(
+                    `https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/ai/run/@cf/stabilityai/stable-diffusion-xl-base-1.0`,
+                    {
+                        method: "POST",
+                        headers: {
+                            Authorization: `Bearer ${CLOUDFLARE_API_TOKEN}`,
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({prompt: imagePrompt}),
+                    }
+                );
+
+                if (!imageResponse.ok) {
+                    console.warn("Cloudflare image generation failed:", imageResponse.status, imageResponse.statusText);
+                } else {
+                    // Cloudflare may return binary (PNG) or JSON
+                    const contentType = imageResponse.headers.get("content-type");
+                    let imageBuffer: Buffer;
+
+                    if (contentType && contentType.includes("application/json")) {
+                        // JSON response with base64 field
+                        const resultJson = await imageResponse.json();
+                        console.log("Cloudflare JSON response:", JSON.stringify(resultJson).substring(0, 200));
+                        const base64 = resultJson.result?.image || resultJson.image || resultJson.data;
+                        if (!base64) {
+                            console.warn("No image found in JSON response, continuing without image");
+                        } else {
+                            imageBuffer = Buffer.from(base64, "base64");
+                            // Upload to Supabase
+                            imagePath = `recipes/${Date.now()}.png`;
+                            const {error} = await supabase.storage
+                                .from("recipe-images")
+                                .upload(imagePath, imageBuffer, {
+                                    contentType: "image/png",
+                                    upsert: true,
+                                });
+
+                            if (error) {
+                                console.error("Supabase upload error:", error);
+                                imagePath = null; // Continue without image
+                            }
+                        }
+                    } else {
+                        // Binary image (PNG) returned directly
+                        const arrayBuffer = await imageResponse.arrayBuffer();
+                        imageBuffer = Buffer.from(arrayBuffer);
+                        // Upload to Supabase
+                        imagePath = `recipes/${Date.now()}.png`;
+                        const {error} = await supabase.storage
+                            .from("recipe-images")
+                            .upload(imagePath, imageBuffer, {
+                                contentType: "image/png",
+                                upsert: true,
+                            });
+
+                        if (error) {
+                            console.error("Supabase upload error:", error);
+                            imagePath = null; // Continue without image
+                        }
+                    }
+                }
+            } else {
+                console.warn("Cloudflare credentials not configured, skipping image generation");
             }
-        );
-
-        // Cloudflare may return binary (PNG) or JSON
-        const contentType = imageResponse.headers.get("content-type");
-
-        let imageBuffer: Buffer;
-
-        if (contentType && contentType.includes("application/json")) {
-            // JSON response with base64 field
-            const resultJson = await imageResponse.json();
-            const base64 = resultJson.result?.image;
-            if (!base64) throw new Error("No image found in JSON response");
-            imageBuffer = Buffer.from(base64, "base64");
-        } else {
-            // Binary image (PNG) returned directly
-            const arrayBuffer = await imageResponse.arrayBuffer();
-            imageBuffer = Buffer.from(arrayBuffer);
-        }
-
-        // Upload to Supabase
-        const imagePath = `recipes/${Date.now()}.png`;
-
-        const {error} = await supabase.storage
-            .from("recipe-images")
-            .upload(imagePath, imageBuffer, {
-                contentType: "image/png",
-                upsert: true,
-            });
-
-        if (error) {
-            console.error("Supabase upload error:", error);
-            return NextResponse.json({error: "Image upload error"}, {status: 502});
+        } catch (imageError) {
+            console.error("Image generation error (continuing without image):", imageError);
+            // Continue without image - recipe creation should not fail due to image generation issues
         }
 
         const {data: requestData, error: requestError} = await supabase
